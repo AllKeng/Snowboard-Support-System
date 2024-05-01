@@ -7,13 +7,22 @@
 
 ### Designs
 
-    Schematics
+    
+    - [Schematics](schematics.md)
+    - [Video]()
+    -[Design Poster]()
 
 
 ### User Manual
 
 
 ### Contributors
+
+    - Allen Keng
+    - John Mamola
+    - Bran Zhang
+
+
 
 
 	![alt text](image.jpg)
