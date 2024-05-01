@@ -8,9 +8,9 @@
 ### Designs
 
     
-[Schematics](schematics.md)
-[Video]()
-[Design Poster]()
+- [Schematics](schematics.md)
+- [Video]()
+- [Design Poster]()
 
 
 ### User Manual
