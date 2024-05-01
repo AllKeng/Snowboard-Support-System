@@ -8,9 +8,9 @@
 ### Designs
 
     
-    - [Schematics](schematics.md)
+    - [Schematics](/Snowboard-Support-System/schematics.html)
     - [Video]()
-    -[Design Poster]()
+    - [Design Poster]()
 
 
 ### User Manual
