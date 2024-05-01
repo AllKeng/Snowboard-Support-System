@@ -8,7 +8,7 @@
 ### Designs
 
     
-    - [Schematics](/Snowboard-Support-System/schematics.html)
+    - [Schematics](https://allkeng.github.io/Snowboard-Support-System/schematics.html)
     - [Video]()
     - [Design Poster]()
 
