@@ -13,10 +13,11 @@ async def read_data(client):
     try:
         bytesRead = await client.read_gatt_char(ACCELEROMETER_UUID)
         print(bytesRead)
-        value = struct.unpack('1f', bytesRead)
+        value = struct.unpack('2f', bytesRead)
+        print(value)
     except Exception:
-        print(Exception.)
-        await client.disconnect()
+        print(Exception)
+    await client.disconnect()
 
     #print(f"Sensors read : {value}")
 
@@ -37,8 +38,9 @@ async def scan_and_connect():
         if device.name == DEVICE_NAME:
             async with BleakClient(device) as client:
                 print(f"Connected to device: {device.name}")
-                await read_data(client)
-                await cycle_data(client)
+                if(client.services):
+                    await read_data(client)
+                #await cycle_data(client)
                 break
         else:
             print(device.name)
