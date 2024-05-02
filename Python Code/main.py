@@ -4,6 +4,8 @@ from bluetoothESP import scan_and_connect
 import asyncio
 
 import sys
+import math
+import time
 import tkinter as tk
 import tkinter.ttk as ttk
 from threading import Thread, Lock
@@ -34,6 +36,7 @@ class App(tk.Tk):
         self.connectblue = tk.IntVar()
 
         self.output = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        self.calibratedOutput = [0.0, 1.0, 2.0]
 
         self.checkButton = tk.Checkbutton(self, text="Connect to Bluetooth",  variable=self.connectblue, onvalue=1, offvalue=0,command=lambda : self.toggle_bluetooth(self.connectblue))
         self.checkButton.pack(side=tk.TOP, anchor=tk.E, padx=10, pady=10)
@@ -44,8 +47,6 @@ class App(tk.Tk):
         tk.Label(self, text="Console").pack(side=tk.BOTTOM, anchor=tk.W,padx=50)
         self.display.pack(side=tk.BOTTOM, anchor=tk.W,padx=50, pady=10)
         tk.Label(self, text="Display").pack(side=tk.BOTTOM, anchor=tk.W,padx=50)
-        
-        
         sys.stdout = ConsoleRedirector(self.console)
 
 
@@ -58,13 +59,13 @@ class App(tk.Tk):
     def update_calibration(self):
         with self._lock:
             popup_window = tk.Toplevel(self)
-            popup_window.geometry("200x100")
+            popup_window.geometry("300x200")
 
-            label = tk.Label(popup_window, text="This is a popup window")
-            label.pack(pady=10)
+            self.displayCalibration(popup_window,tk.TOP,tk.N,0,10)
     
             close_button = tk.Button(popup_window, text="Close", command=popup_window.destroy)
-            close_button.pack()
+            close_button.pack(side=tk.TOP, anchor=tk.N, padx=10, pady=10)
+            self.displayCalibration(self,tk.BOTTOM,tk.E,10,10)
             return
     
     
@@ -106,9 +107,51 @@ class App(tk.Tk):
             print(self.output)
             self.after(1000,self.update_output)  
     
-    
-    def toString():
-        return
+    def ParseOutput():
+        result = []
+        AccX = output[0]
+        AccY = output[1]
+        AccZ = output[2]
+        GyroX = output[3]
+        GyroY = output[4]
+        GyroZ = output[5]
+        accAngleX = (math.atan(AccY / math.sqrt(pow(AccX, 2) + pow(AccZ, 2))) * 180 / math.pi) - 0.58
+        accAngleY = (math.atan(-1 * AccX / math.sqrt(pow(AccY, 2) + pow(AccZ, 2))) * 180 / math.pi) + 1.58
+
+        previousTime = currentTime
+        currentTime = time.time()
+        elapsedTime = (currentTime - previousTime)  
         
+        # Correct output with Error values
+        GyroX = GyroX + 0.56
+        GyroY = GyroY - 2
+        GyroZ = GyroZ + 0.79
+
+        # Calculate gyro angles
+        gyroAngleX = gyroAngleX + GyroX * elapsedTime
+        gyroAngleY = gyroAngleY + GyroY * elapsedTime
+        yaw = yaw + GyroZ * elapsedTime
+
+        # Complementary filter - combine accelerometer and gyro angle values
+        roll = 0.96 * gyroAngleX + 0.04 * accAngleX
+        pitch = 0.96 * gyroAngleY + 0.04 * accAngleY
+        
+        result.append(pitch)
+        result.append(raw)
+        result.append(row)
+        return result
+        
+    def displayCalibration(self,window,sd,ac,px,py):
+        pitch = tk.Label(window, text=self.toString("Pitch", 0))
+        pitch.pack(side=sd, anchor=ac, padx = px, pady=py)
+        yaw = tk.Label(window, text=self.toString("Yaw", 1))
+        yaw.pack(side=sd, anchor=ac, padx = px,pady=py)
+        roll = tk.Label(window, text=self.toString("Roll", 2))
+        roll.pack(side=sd, anchor=ac, padx = px, pady=py)
+            
+    def toString(self,text,i):
+        return text + ": " + str(self.calibratedOutput[i])
+    
+    
 if __name__ == "__main__":
     app = App()
