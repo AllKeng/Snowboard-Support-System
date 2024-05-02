@@ -48,8 +48,14 @@ class App(tk.Tk):
         self.display.pack(side=tk.BOTTOM, anchor=tk.W,padx=50, pady=10)
         tk.Label(self, text="Display").pack(side=tk.BOTTOM, anchor=tk.W,padx=50)
         sys.stdout = ConsoleRedirector(self.console)
-
-
+        
+        self.pitch = tk.Label(self,  text=self.toString("Pitch", 0))
+        self.pitch.pack(side=tk.TOP, anchor = tk.W, padx = 10, pady=10)
+        self.yaw = tk.Label(self, text=self.toString("Yaw", 1))
+        self.yaw.pack(side=tk.TOP, anchor = tk.W,  padx = 10, pady=10)
+        self.roll = tk.Label(self, text=self.toString("Roll", 2))
+        self.roll.pack(side=tk.TOP, anchor = tk.W,  padx = 10, pady=10)
+        
         
         #self.after(1000, self.update_output)
         #self.after(1000, self.update_text)
@@ -65,7 +71,9 @@ class App(tk.Tk):
     
             close_button = tk.Button(popup_window, text="Close", command=popup_window.destroy)
             close_button.pack(side=tk.TOP, anchor=tk.N, padx=10, pady=10)
-            self.displayCalibration(self,tk.BOTTOM,tk.E,10,10)
+            self.pitch.config(text=self.toString("Pitch", 0))
+            self.yaw.config(text=self.toString("Yaw", 1))
+            self.roll.config(text=self.toString("Roll", 2))
             return
     
     
@@ -142,12 +150,12 @@ class App(tk.Tk):
         return result
         
     def displayCalibration(self,window,sd,ac,px,py):
-        pitch = tk.Label(window, text=self.toString("Pitch", 0))
-        pitch.pack(side=sd, anchor=ac, padx = px, pady=py)
-        yaw = tk.Label(window, text=self.toString("Yaw", 1))
-        yaw.pack(side=sd, anchor=ac, padx = px,pady=py)
-        roll = tk.Label(window, text=self.toString("Roll", 2))
-        roll.pack(side=sd, anchor=ac, padx = px, pady=py)
+        window.pitch = tk.Label(window, text=self.toString("Pitch", 0))
+        window.pitch.pack(side=sd, anchor=ac, padx = px, pady=py)
+        window.yaw = tk.Label(window, text=self.toString("Yaw", 1))
+        window.yaw.pack(side=sd, anchor=ac, padx = px,pady=py)
+        window.roll = tk.Label(window, text=self.toString("Roll", 2))
+        window.roll.pack(side=sd, anchor=ac, padx = px, pady=py)
             
     def toString(self,text,i):
         return text + ": " + str(self.calibratedOutput[i])
