@@ -1,6 +1,7 @@
 import asyncio
 from bleak import BleakScanner, BleakClient
 import struct
+import numpy
 
 CHARACTERISTIC_UUID = "19b10011-e8f2-537e-4f6c-d104768a1214"  # Replace with your characteristic UUID
 ACCELEROMETER_UUID = "19b10011-e8f2-537e-4f6c-d104768a1215"
@@ -13,11 +14,11 @@ async def read_data(client):
     try:
         bytesRead = await client.read_gatt_char(ACCELEROMETER_UUID)
         print(bytesRead)
-        value = struct.unpack('2f', bytesRead)
+        value = struct.unpack('6f', bytesRead)
+        
         print(value)
-    except Exception:
-        print(Exception)
-    await client.disconnect()
+    except Exception as error:
+        print("An error occurred: ", error)
 
     #print(f"Sensors read : {value}")
 
