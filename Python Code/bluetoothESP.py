@@ -35,8 +35,10 @@ async def cycle_data(client):
 async def scan_and_connect():
     scanner = BleakScanner()
     devices = await scanner.discover()
+    print(f"going through device list..." )
     for device in devices:
         if device.name == DEVICE_NAME:
+            print(f"located target device..." )
             async with BleakClient(device) as client:
                 print(f"Connected to device: {device.name}")
                 if(client.services):
@@ -44,6 +46,6 @@ async def scan_and_connect():
                 #await cycle_data(client)
                 break
         else:
-            print(device.name)
+            print(f"name: " + device.name)
 
-asyncio.run(scan_and_connect())
+#asyncio.run(scan_and_connect())
