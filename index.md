@@ -1,4 +1,4 @@
-# Snowboard Support System Solution
+## by Allen Keng, John Mamola, Bran Zhang for ECE 196 Spring 2024 ![jacobs](Images/UCSDLogo_JSOE_BlueGold.jpg)
 ## Python-ESP32-Accelerometer
 
 ### Project Overview
@@ -8,7 +8,7 @@
 ### Designs
 
     
-- [Schematics](schematics.md)
+- [PCB Designs](schematics.md)
 - [Video]()
 - [Design Poster]()
 
