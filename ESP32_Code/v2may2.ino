@@ -2,6 +2,7 @@
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
 #include <Wire.h>
+#include <stdio.h>
 
 #define NUMBYTESFROMACC 24
 #define NUMVALUESFROMACC 6
@@ -14,18 +15,9 @@ BLEByteCharacteristic calibrateCharacteristic("19b10011-e8f2-537e-4f6c-d104768a1
 
 Adafruit_MPU6050 mpu;
 
-const int LED{17};
+//const int LED{17};
 
-struct accel{
-  int offsetX{0};
-  int offsetY{0};
-  int offsetZ{0};  
-};
-struct angularV{
-  int offsetX{0};
-  int offsetY{0};
-  int offsetZ{0};  
-};
+float sensorOffset[NUMVALUESFROMACC] = {0};
 
 float testingValues[NUMVALUESFROMACC] = { 8.88, 9.99, 10.10, 6.66, 4.20, 21.21};
 byte byteArray[NUMBYTESFROMACC];
@@ -34,7 +26,7 @@ void setup() {
   Serial.begin(9600);
   while (!Serial);
 
-  pinMode(LED, OUTPUT);
+  //pinMode(LED, OUTPUT);
 
   /*************** SETTING UP THE BLE MODE *******************/
   // begin initialization
@@ -46,6 +38,7 @@ void setup() {
   // set advertised local name and service UUID
   BLE.setLocalName("SnowboardSensorFront");
   BLE.setAdvertisedService(sensorService);
+  BLE.setAdvertisingInterval(62);
 
   // TODO: REMOVE WHEN DONE
   sensorService.addCharacteristic(switchCharacteristic);
@@ -158,19 +151,21 @@ void loop() {
       // (accounting for their offset)
       float sensorValues[NUMVALUESFROMACC] = { 
         // m/s^2
-        a.acceleration.x - accel.offsetX,
-        a.acceleration.y - accel.offsetY, 
-        a.acceleration.z - accel.offsetZ, 
+        a.acceleration.x - sensorOffset[0],
+        a.acceleration.y - sensorOffset[1], 
+        a.acceleration.z - sensorOffset[2], 
         // Rotation - rad/s
-        g.gyro.x - angularV.offsetX, 
-        g.gyro.y - angularV.offsetY, 
-        g.gyro.z - angularV.offsetZ
+        g.gyro.x - sensorOffset[3], 
+        g.gyro.y - sensorOffset[4], 
+        g.gyro.z - sensorOffset[5]
       };
 
       // Convert the float array to a byte array
       for(int i = 0; i < NUMVALUESFROMACC; i++) {
         memcpy(&byteArray[i * sizeof(float)], &testingValues[i], sizeof(float));
+        Serial.print(sensorValues[i]);
       }
+      Serial.print("\n");
       
       sendSensorChars.writeValue(byteArray,sizeof(byteArray));
       //sendSensorChars.writeValue(sensorData, sizeof(sensorData));
@@ -179,21 +174,21 @@ void loop() {
       if (switchCharacteristic.written()) {
         if (switchCharacteristic.value()) {
           Serial.println("LED on");
-          digitalWrite(LED, HIGH);
+          //digitalWrite(LED, HIGH);
           
         } else {
           Serial.println("LED off");
-          digitalWrite(LED, LOW);
+          //digitalWrite(LED, LOW);
         }
       }
       if (calibrateCharacteristic.written()) {
         if (calibrateCharacteristic.value()) {
-          accel.offsetX = a.acceleration.x;
-          accel.offsetY = a.acceleration.y;
-          accel.offsetZ = a.acceleration.z;
-          angularV.offsetX = g.acceleration.x;
-          angularV.offsetY = g.acceleration.y;
-          angularV.offsetZ = g.acceleration.z;
+          sensorOffset[0] = a.acceleration.x;
+          sensorOffset[1] = a.acceleration.y;
+          sensorOffset[2] = a.acceleration.z;
+          sensorOffset[3] = g.acceleration.x;
+          sensorOffset[4] = g.acceleration.y;
+          sensorOffset[5] = g.acceleration.z;
           calibrateCharacteristic.writeValue(2); // Calibration Done Flag is 0x02
         } else {
           // Do nothing
