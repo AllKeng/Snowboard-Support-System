@@ -29,9 +29,9 @@
 ## Designs and Demos
 
     
-- [PCB Designs](schematics.md)
+- [PCB Designs and Enclosure](schematics.md)
 - [Video Demo]()
-- [Design Poster]()
+- [Design Poster](https://allkeng.github.io/Snowboard-Support-System/)
 
 
 ## User Manual / Tutorial:
@@ -45,10 +45,15 @@
 
 
 ## Our Resources: 
-* Resource 1
-    - Description:  
-* Resource 2
-    - Description:  
+* Connections:
+    - https://randomnerdtutorials.com/esp32-mpu-6050-accelerometer-gyroscope-arduino/   
+        * Figuring out the pins we were going to connect to while designing PCB 
+    - https://bleak.readthedocs.io/en/latest/api/client.html 
+        * Making python act as a BLE receiver. 
+ 
+* I2C Communication
+    - https://randomnerdtutorials.com/esp32-i2c-communication-arduino-ide/
+        * Understanding how to read values from an I2C device via “wire” transmission 
 * Resource 3
     - Description:  
 * Resource 4

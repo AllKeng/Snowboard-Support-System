@@ -5,3 +5,6 @@ Our PCB was designed to act as a docking station for  our ESP32 Dev Board, our 9
 
 ### Layout
 ![Layout](Images/PCBLayout.png)
+
+### Enclosure
+![Enclosure](Images/Case_Rev_0.png)
