@@ -490,7 +490,9 @@ img{
   color: var(--white-color);
 }
 .menu .menu-content{
-  display: grid;
+  /*display: grid;*/
+  display: flex; 
+  align-items: center;
   grid-template-columns: 1.8fr 1fr;
   column-gap: 6rem;
   margin-top: 6rem
