@@ -946,13 +946,16 @@ img{
 
 /* Position the "next button" to the right */
 .next {
-  right: 0;
+  margin-left: 10rem;
+  right: -12rem;
   border-radius: 3px 0 0 3px;
+  background-color: rgb(25, 0, 255);
 }
 
 /* On hover, add a black background color with a little bit see-through */
-.prev:hover, .next:hover {
-  background-color: rgba(0,0,0,0.8);
+.prev {
+  left: -12rem;
+  background-color: rgb(25, 0, 255);
 }
 
 /* Caption text */
@@ -989,4 +992,34 @@ img{
 
 .active, .dot:hover {
   background-color: #717171;
+}
+
+.cyan_color {
+  color: aqua;
+  text-align: center;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  margin-bottom: 1rem;
+}
+
+li {
+  font-size: 18px;
+  margin-left: 20px;
+  list-style-type: circle, square;
+}
+
+/* Style the main list items (circles) */
+.references ul li {
+  list-style-type: circle; /* Use circle as the bullet point */
+  margin-bottom: 10px; /* Add some space between list items */
+}
+
+/* Style the nested list items (squares) */
+.references ul ul li {
+  list-style-type: square; /* Use square as the bullet point for nested lists */
+}
+
+/* Style the nested list items (squares) */
+.references ul ul ul li {
+  list-style-type: circle; /* Use square as the bullet point for nested lists */
+  margin-left: 20px;
 }
