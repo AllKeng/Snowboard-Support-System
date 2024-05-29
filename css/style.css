@@ -588,9 +588,8 @@ img{
   flex-direction: column;
 }
 .review-img{
-  height: 150px;
-  width: 150px;
-  border-radius: 50%;
+  height: 450px;
+  width: 650px;
   margin-bottom: 2rem;
 }
 .review-quote{
