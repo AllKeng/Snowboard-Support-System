@@ -5,7 +5,7 @@ import numpy
 
 CHARACTERISTIC_UUID = "19b10011-e8f2-537e-4f6c-d104768a1214"  # Replace with your characteristic UUID
 ACCELEROMETER_UUID = "19b10011-e8f2-537e-4f6c-d104768a1215"
-DEVICE_NAME = "Aether's LED"  # Replace with your device's name
+DEVICE_NAME = "SnowboardSensorFront" # Aether's LED"  # Replace with your device's name
 
 async def send_data(client, value):
     await client.write_gatt_char(CHARACTERISTIC_UUID, bytearray([value]), response=True)
