@@ -142,7 +142,14 @@ img{
 .button:hover{
   background-color: var(--primary-color-hover);
 }
-.section-subtitle,
+.section-subtitle {
+  color: var(--primary-color);
+  font-size: var(--normal-font);
+  letter-spacing: 1px;
+  font-weight: var(--font-medium);
+  text-align: center;
+  font-size: larger;
+}
 .content-subtitle{
   color: var(--primary-color);
   font-size: var(--normal-font);
@@ -553,15 +560,7 @@ img{
 }
 
 /* Brand */
-.brand-images{
-  display: grid;
-  align-items: center;
-  column-gap: 2rem;
-  justify-content: space-between;
-  justify-items: center;
-  margin-top: 3rem;
-  grid-template-columns: repeat(5,1fr);
-}
+
 .brand-img{
   width: 150px;
   object-fit: contain;
@@ -588,10 +587,17 @@ img{
   flex-direction: column;
 }
 .review-img{
-  height: 450px;
-  width: 650px;
+  height: 425px;
+  width: 600px;
   margin-bottom: 2rem;
 }
+
+.review-img2{
+  height: 425px;
+  width: 350px;
+  margin-bottom: 2rem;
+}
+
 .review-quote{
   padding: 0 15rem;
   text-align: center;
