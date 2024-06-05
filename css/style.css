@@ -181,6 +181,7 @@ img{
   width: 100%;
   z-index: var(--z-fixed);
   transition: var(--tran-0-5);
+  background-color: var(--white-color);
 }
 .header-active{
   height: 6rem;
